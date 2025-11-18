@@ -1,32 +1,27 @@
 const excludedKeys = ["Abort", "AbortIf", "Break", "Continue", "Else", "ElseIf", "End", "Skip", "SkipIf"];
 for (const key of Object.getOwnPropertyNames(mod)) {
-    // @ts-ignore
-    const value = mod[key];
+    const value = (mod as any)[key];
 
     if (typeof value === 'function' && !excludedKeys.includes(key) && !key.endsWith("Item") && !key.startsWith("Event")) {
         try {
             value() // value(2)
         } catch (e) {
-            // @ts-ignore
-            console.error(`Error executing function '${key}':`, e.message);
+            console.error(`Error executing function '${key}':`, (e as Error).message);
         }
     }
 }
 
-// const excludedKeys = ["Abortfunction", "AbortIffunction", "Abort", "AbortIf", "Break", "Continue", "Else", "ElseIf", "End"];
-// for (const key of Object.getOwnPropertyNames(mod)) {
-//     // @ts-ignore
-//     const value = mod[key];
+for (const key of Object.getOwnPropertyNames(mod)) {
+    const value = (mod as any)[key];
 
-//     if (typeof value === 'function' && !excludedKeys.includes(key) && (key.endsWith("Item") || key.startsWith("Event"))) {
-//         try {
-//             console.log(key)
-//         } catch (e) {
-//             // @ts-ignore
-//             console.error(`Error executing function '${key}':`, e.message);
-//         }
-//     }
-// }
+    if (typeof value === 'function' && !excludedKeys.includes(key) && (key.endsWith("Item") || key.startsWith("Event"))) {
+        try {
+            console.log(key)
+        } catch (e) {
+            console.error(`Error executing function '${key}':`, (e as Error).message);
+        }
+    }
+}
 
 
 interface TypeInfo {
